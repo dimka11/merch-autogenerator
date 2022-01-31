@@ -4,6 +4,8 @@ from app import app
 from app.users.views import mod
 from merch_generator import generator
 
+generator.generate("Футболка Adidas для предсказания государственного переворота")
+
 
 class LoggingMiddleware(object):
     def __init__(self, app):
@@ -22,5 +24,5 @@ class LoggingMiddleware(object):
 
 #app.wsgi_app = LoggingMiddleware(app.wsgi_app)
 
-app.register_blueprint(mod)
-app.run(debug=True)
+# app.register_blueprint(mod)
+# app.run(debug=True)

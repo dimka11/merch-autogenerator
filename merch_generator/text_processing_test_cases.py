@@ -1,4 +1,4 @@
-from text_processing import TextProcessing
+from text_processor import TextProcessor
 
 if __name__ == "__main__":
 	sentence1 = "Зеленая футболка Скуратова для турнир по шахматам в России в Омске"
@@ -10,7 +10,7 @@ if __name__ == "__main__":
 	sentences = [sentence1, sentence2, sentence3, sentence4, sentence5, sentence6]
 	# TEST_SEN_IDX = 3
 
-	text_processing = TextProcessing()
+	text_processing = TextProcessor()
 
 	for sen in sentences:
 		text_processing_result = text_processing.start_processing(sen)
