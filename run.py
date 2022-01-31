@@ -2,6 +2,8 @@ import pprint
 
 from app import app
 from app.users.views import mod
+from merch_generator import generator
+
 
 class LoggingMiddleware(object):
     def __init__(self, app):
