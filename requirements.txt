@@ -9,3 +9,9 @@ colorama==0.4.4
 itsdangerous==2.0.1
 numpy==1.22.1
 opencv-python==4.5.5.62
+
+git+https://github.com/huggingface/transformers.git
+sentencepiece
+natasha
+colour
+deep-translator
