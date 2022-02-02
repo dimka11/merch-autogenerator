@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_file
-app = Flask(__name__)
+app = Flask(__name__,  static_url_path='', 
+            static_folder='./static')
 
 @app.route('/api/string_input/<uuid>', methods=['GET', 'POST']) # примеры с SO
 def string_input(uuid):
