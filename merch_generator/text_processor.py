@@ -41,7 +41,7 @@ class TextProcessor:
         return self.ner_dict
 
     def classify_topic(self):
-        topic_cats = ["конференция", "спорт", "концерт", "фестиваль", "выставка", "работа"]
+        topic_cats = ["конференция", "спорт", "концерт", "фестиваль", "выставка", "работа", "политика"]
         classifier_result = self.classifier(self.text_string, topic_cats,
                                             multi_label=False)  # по идее можно в конец перенести и использовать с отдельными словами мб как-то на качество повлияет
         # classifier(self.text_string, topic_cats, multi_label=True) # Попробовать с несколькими темами
