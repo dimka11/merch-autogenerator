@@ -14,7 +14,7 @@ class MerchGenerator:
     def generate(
             self,
             img_description: str,  # text description of the image to be generated
-    ):
+    ) ->dict:
         text_processing_result = self.text_processor.start_processing(img_description)
         print(text_processing_result)
         merch_features_dict = self.text_processor.get_text_features_dict()

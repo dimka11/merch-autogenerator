@@ -7,7 +7,8 @@ if __name__ == "__main__":
 	sentence4 = "инсталяция фиолетовая для Burning man мясная лавка на Чили в Владивостоке"
 	sentence5 = "мерч для Яндекса желтый с надписью Австралия"
 	sentence6 = "Синяя майка Пекарушка для концерта в Ноябрьске клуб Точка"
-	sentences = [sentence1, sentence2, sentence3, sentence4, sentence5, sentence6]
+	sentence7 = "Футболка Adidas для предсказания государственного переворота"
+	sentences = [sentence1, sentence2, sentence3, sentence4, sentence5, sentence6, sentence7]
 	# TEST_SEN_IDX = 3
 
 	text_processing = TextProcessor()
