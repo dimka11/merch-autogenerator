@@ -1,12 +1,5 @@
 Flask==2.0.2
-Flask-WTF==1.0.0
-Jinja2==3.0.3
-MarkupSafe==2.0.1
-WTForms==3.0.1
-Werkzeug==2.0.2
-click==8.0.3
-colorama==0.4.4
-itsdangerous==2.0.1
+
 numpy==1.22.1
 opencv-python==4.5.5.62
 
