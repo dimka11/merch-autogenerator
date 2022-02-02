@@ -1,28 +1,26 @@
-import pprint
+from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 
-from app import app
-from app.users.views import mod
-from merch_generator import generator
+app = Flask(__name__, static_url_path='', static_folder='./static')
 
-generator.generate("Футболка Adidas для предсказания государственного переворота")
+@app.route('/')
+def hello_world():
+    return app.send_static_file('./index.html')
 
+@app.route('/api', methods=['POST'])
+def string_input():
+    content = request.form
+    print(content)
+    # print(content["query"])
+    # запускаем обработку
+    # и получаем результат обработки:
+    result = {}
+    if result is not None: # Или возвращаем ошибку и обрабатываем
+    # В result должно быть количество сгенерированных изображений либо пути до них
+        return jsonify({"image_urls":["http://192.168.0.10:5000/images/1.jpg", "http://192.168.0.10:5000/images/2.jpg"]})
+    else:
+        return jsonify({"error": "error_type"})
 
-class LoggingMiddleware(object):
-    def __init__(self, app):
-        self._app = app
-
-    def __call__(self, env, resp):
-        errorlog = env['wsgi.errors']
-        pprint.pprint(('REQUEST', env), stream=errorlog)
-
-        def log_response(status, headers, *args):
-            pprint.pprint(('RESPONSE', status, headers), stream=errorlog)
-            return resp(status, headers, *args)
-
-        return self._app(env, log_response)
-
-
-#app.wsgi_app = LoggingMiddleware(app.wsgi_app)
-
-# app.register_blueprint(mod)
-# app.run(debug=True)
+if __name__ == '__main__':
+    # Тут инициализируем March Generator и создаем TextProcessor
+    app.run(host= '0.0.0.0',debug=True)
