@@ -36,11 +36,11 @@ class ImgProcessor:
         logo_img = self.download_image("логотип " + logo_name + " png")
         
         h, w = logo_img.shape[:2]
-        resize_koef = LOGO_SIZE / max(logo_img.shape)
+        resize_koef = self.img_size / max(logo_img.shape)
         h, w = int(h * resize_koef), int(w * resize_koef)
         logo_resized = cv2.resize(logo_img, (w, h), cv2.INTER_LINEAR)
         
-        CENTER_X, CENTER_Y = primary_image.shape[:2]
+        CENTER_X, CENTER_Y = img.shape[:2]
         CENTER_X, CENTER_Y = CENTER_X // 2, CENTER_Y // 2
         h, w = logo_resized.shape[:2]
         x = CENTER_X - w // 2
