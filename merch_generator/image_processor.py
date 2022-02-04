@@ -54,7 +54,7 @@ class ImgProcessor:
     def add_logo(self, img: np.ndarray, logo_name: str):
         img_with_logo = img.copy()
         logo_img = self.download_image(f"логотип {logo_name} png", 'png')
-        
+        print('logo_img.shape', logo_img.shape)
         h, w = logo_img.shape[:2]
         resize_koef = self.logo_max_size / max(logo_img.shape)
         h, w = int(h * resize_koef), int(w * resize_koef)
@@ -67,8 +67,10 @@ class ImgProcessor:
         h, w = logo_resized.shape[:2]
         x = CENTER_X - w // 2
         y = CENTER_Y - h // 2
-        img_with_logo[y:y+h, x:x+w] = logo_resized
-        
+        alpha = (logo_resized.mean(axis=-1) < 220).astype(np.uint8)
+        alpha = np.stack([alpha] * 4, axis=-1)
+
+        img_with_logo[y:y+h, x:x+w] = logo_resized * alpha + img_with_logo[y:y+h, x:x+w] * (1 - alpha)
         return img_with_logo
 
     def add_flag(self, img: np.ndarray, logo_name: str):
