@@ -1,15 +1,12 @@
-from YandexImagesParser.ImageParser import YandexImage
-import requests
+import cv2
+import numpy as np
 
-parser = YandexImage()
+from merch_generator.image_processor import ImgProcessor
 
-print(parser.about, parser.version)
+im_proc = ImgProcessor()
 
-for i, item in enumerate(parser.search("Дизайн паттерн")):
-    print(item.title)
-    print(item.url)
-    print(item.preview.url)
-    img_data = requests.get(item.preview.url).content
-    with open(f'downloads/image_name_{i}.jpg', 'wb') as handler:
-        handler.write(img_data)
-    print("(", item.size, ")", sep='')
+image = np.ones((1024, 1024, 4), dtype=np.uint8) * 255
+image = im_proc.set_main_colour(image, "красный")
+image = im_proc.add_design_pattern(image, "октябрьская революция")
+image = im_proc.add_logo(image, "adidas")
+cv2.imwrite('results/output.png', image)
