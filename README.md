@@ -24,4 +24,6 @@ Go to http://server:port and enter the text to the box and press button
 
 ## tg bot:
 
-it's under development
+Got to chat with @TestTG11_bot
+
+Write message /start Your text string
