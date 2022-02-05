@@ -27,6 +27,8 @@
 
 ## Запуск бота на своём сервере:
 
+Для запуска рекомендуется использовать `python 3.8` и ОС `Ubuntu 21.04`
+
 1) склонируйте репозиторий 
 
 `git clone https://github.com/mikhail-7975/merch-autogenerator.git`
@@ -72,6 +74,8 @@ Telegram bot `@merch_generator_bot` that generates merchandise (namely, a T-shir
 2) Wait for the bot to generate the image :)
 
 ## Run the bot on your server:
+
+To run it is recommended to use `python 3.8` and `Ubuntu 21.04 OS`
 
 1) clone the repository
 
