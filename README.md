@@ -38,10 +38,10 @@
 
 Для установки YandexImageParser следуйте инструкции, указанной в репозитории https://github.com/Ulbwaa/YandexImagesParser/
 
-3) Создайте в корневой папке проекта файл `config.py`, в котором укажите URL своего телеграм-бота
+3) Создайте в корневой папке проекта файл `config.py`, в котором укажите токен своего телеграм-бота
 
 ```python
-telegram_bot_url = "str_with_your_url"
+telegram_bot_token = "str_with_your_url"
 ```
 4) Запустите файл `run.py`
 
@@ -89,10 +89,10 @@ To run it is recommended to use `python 3.8` and `Ubuntu 21.04 OS`
 
 To install YandexImageParser, follow the instructions in the repository https://github.com/Ulbwaa/YandexImagesParser/
 
-3) Create a file `config.py` in the root folder of the project, in which specify the URL of your telegram bot
+3) Create a file `config.py` in the root folder of the project, in which specify the token of your telegram bot
 
 ```python
-telegram_bot_url = "str_with_your_url"
+telegram_bot_token = "str_with_your_url"
 ```
 4) Run the file `run.py`
 
