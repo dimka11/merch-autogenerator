@@ -14,9 +14,14 @@ def before_request():
 def hello_world():
     return app.send_static_file('./index.html')
 
+@app.route('/images', methods=['POST'])
 @app.route('/api', methods=['POST'])
 def string_input():
     content = request.form
+    try:
+        q = content["query"]
+    except:
+        content = request.get_json()
     print(content["query"])
     # запускаем обработку
     # и получаем результат обработки:
