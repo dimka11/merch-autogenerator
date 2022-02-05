@@ -1,0 +1,3 @@
+[submodule "merch-generator-fe"]
+	path = merch-generator-fe
+	url = https://github.com/dimka11/merch-generator-fe
