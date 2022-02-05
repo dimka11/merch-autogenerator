@@ -1,4 +1,4 @@
-#RU
+# RU
 # Автогенератор мерча по бренду
 
 ## Описание:
@@ -44,7 +44,7 @@ telegram_bot_url = "str_with_your_url"
 
 5) Отправьте текстовый запрос на генерацию изображения и дождитесь результата:)
 
-#EN
+# EN
 # Brand merchandise generator
 
 ## Description:
