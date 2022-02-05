@@ -15,10 +15,10 @@ class TextProcessor:
         # init and download models ~ few minutes, about 4 GB download data
         print("start loading models")
         self.classifier = pipeline("zero-shot-classification", model='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli',
-                                   tokenizer='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli')
+                                   tokenizer='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli', framework="pt")
         print("cls loaded")
         self.ner = pipeline("ner", grouped_entities=True, model='xlm-roberta-large-finetuned-conll03-english',
-                            tokenizer='xlm-roberta-large-finetuned-conll03-english')
+                            tokenizer='xlm-roberta-large-finetuned-conll03-english', framework="pt")
         print("ner loaded")
 
     def start_processing(self, text_str: str):
