@@ -1,37 +1,46 @@
-from flask import Flask, request, jsonify
+from collections.abc import Callable
 
-app = Flask(__name__, static_url_path='', static_folder='./static')
+from telegram.ext.callbackcontext import CallbackContext
+from telegram.ext.commandhandler import CommandHandler
+from telegram.ext.messagehandler import MessageHandler
+from telegram.ext.updater import Updater
+from telegram.update import Update
+from telegram.ext.filters import Filters
 
-generator_ = None
 
-@app.before_request
-def before_request():
-    from merch_generator import generator # Долго ждем, очень долго
-    global generator_
-    generator_ = generator
+from merch_generator import MerchGenerator, ImgProcessor, TextProcessor
 
-@app.route('/')
-def hello_world():
-    return app.send_static_file('./index.html')
+class TelegramBot:
+    def __init__(self, bot_url: str,):
+        self.updater = Updater(bot_url, use_context=True)
+        self.updater.dispatcher.add_handler(CommandHandler('start', self.start))
+        self.updater.dispatcher.add_handler(CommandHandler('help', self.help))
+        self.updater.dispatcher.add_handler(MessageHandler(Filters.text, self.text_message_handler))
+        self.updater.dispatcher.add_handler(MessageHandler(Filters.command, self.unknown))
+        self.merch_generator = MerchGenerator(img_processor=ImgProcessor(),
+                                              text_processor=TextProcessor())
 
-@app.route('/api', methods=['POST'])
-def string_input():
-    content = request.form
-    print(content["query"])
-    # запускаем обработку
-    # и получаем результат обработки:
-    result = generator_.generate(content["query"])
-    print(result)
-    # result_type = result["type"]
-    result_type = {}
+    def start(self, update: Update, context: CallbackContext):
+        update.message.reply_text(
+            "Hello sir, Welcome to the Bot.Please write"
+            "help to see the commands available."
+        )
 
-    if result_type is not False: # Или возвращаем ошибку и обрабатываем
-    # В result должно быть количество сгенерированных изображений либо пути до них
-        # result_type["imgs_pathes"]
-        imgs_urls = ["http://192.168.0.10:5000/images/1.jpg", "http://192.168.0.10:5000/images/2.jpg"]
-        return jsonify({"image_urls": imgs_urls})
-    else:
-        return jsonify({"error": "error_type"})
+    def help(self, update: Update, context: CallbackContext):
+        update.message.reply_text("Введите описание мероприятия, для которого"
+                                  "вам нужен мерч")
 
-if __name__ == '__main__':
-    app.run(host= '0.0.0.0',debug=True)
+    def unknown(self, update: Update, context: CallbackContext):
+        with open('results/output.png', 'rb') as file:
+            update.message.reply_photo(file)
+        update.message.reply_text(
+            "Sorry '%s' is not a valid command" % update.message.text)
+
+    def text_message_handler(self, update: Update, context: CallbackContext):
+        # (update.message.text)
+        self.merch_generator.generate(update.message.text)
+        with open('results/output сухой.png', 'rb') as file:
+            update.message.reply_photo(file)
+
+    def run(self):
+        self.updater.start_polling()
