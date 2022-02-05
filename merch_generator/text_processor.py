@@ -12,13 +12,14 @@ class TextProcessor:
         self.ner_dict = {}
         self.sentence_lemmat_dict = {}
         self.sentence_lemmat = []
+        self.translated_text = ""
         # init and download models ~ few minutes, about 4 GB download data
         print("start loading models")
         self.classifier = pipeline("zero-shot-classification", model='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli',
-                                   tokenizer='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli')
+                                   tokenizer='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli', framework="pt")
         print("cls loaded")
         self.ner = pipeline("ner", grouped_entities=True, model='xlm-roberta-large-finetuned-conll03-english',
-                            tokenizer='xlm-roberta-large-finetuned-conll03-english')
+                            tokenizer='xlm-roberta-large-finetuned-conll03-english', framework="pt")
         print("ner loaded")
 
     def start_processing(self, text_str: str):
@@ -31,6 +32,7 @@ class TextProcessor:
         self.merch_type()
         self.lemmatization()
         self.colors()
+        self.text_desc()
         self.extras()
         self.brand2()
 
@@ -41,7 +43,7 @@ class TextProcessor:
         return self.ner_dict
 
     def classify_topic(self):
-        topic_cats = ["конференция", "спорт", "концерт", "фестиваль", "выставка", "работа"]
+        topic_cats = ["конференция", "спорт", "концерт", "фестиваль", "выставка", "работа", "политика"]
         classifier_result = self.classifier(self.text_string, topic_cats,
                                             multi_label=False)  # по идее можно в конец перенести и использовать с отдельными словами мб как-то на качество повлияет
         # classifier(self.text_string, topic_cats, multi_label=True) # Попробовать с несколькими темами
@@ -114,7 +116,7 @@ class TextProcessor:
     # self.ner_dict["country"] = sentence_lemmat_dict[ner_dict["country"]]
 
     def colors(self):
-        translated_text = GoogleTranslator(source='auto', target='en').translate(" ".join(self.sentence_lemmat))
+        self.translated_text = GoogleTranslator(source='auto', target='en').translate(" ".join(self.sentence_lemmat))
 
         def check_color(color):
             try:
@@ -125,10 +127,43 @@ class TextProcessor:
                 return False
 
         colors = []
-        for idx, item in enumerate([check_color(word) for word in translated_text.split()]):
+        for idx, item in enumerate([check_color(word) for word in self.translated_text.split()]):
             if item == True:
-                colors.append(translated_text.split()[idx])
+                colors.append(self.translated_text.split()[idx])
         self.ner_dict["colors"] = colors
+
+    def text_desc(self):
+        text_desc_list = []
+
+        translated_back_colors = []
+        for item in self.ner_dict.get("colors"):
+            translated = GoogleTranslator(source='auto', target='ru').translate(item)
+            translated_back_colors.append(translated)
+
+        for word in self.text_string.split():
+            if len(translated_back_colors) > 0:
+                if self.sentence_lemmat_dict.get(word) in translated_back_colors:
+                    continue
+            if self.ner_dict.get("topic") == word:
+                continue
+            if self.ner_dict.get("organization").strip() == word:
+                continue
+            if self.ner_dict.get("city") == word:
+                continue
+            if self.ner_dict.get("country") == word:
+                continue
+            if self.ner_dict.get("merch_type") is not None:
+                if self.sentence_lemmat_dict.get(word) in self.ner_dict.get("merch_type"):
+                    continue
+            if self.ner_dict.get("extra") is not None:
+                if self.sentence_lemmat_dict.get(word).strip() in self.ner_dict.get("extra"):
+                    continue
+            else:
+                text_desc_list.append(word)
+
+
+        self.ner_dict["design_pattern"] = " ".join(text_desc_list)
+
 
     def extras(self):
         self.ner_dict["extra"] = []

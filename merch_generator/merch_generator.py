@@ -19,6 +19,22 @@ class MerchGenerator:
         print(text_processing_result)
         merch_features_dict = self.text_processor.get_text_features_dict()
         print(merch_features_dict)
+        if merch_features_dict['colors']:
+            colour = merch_features_dict['colors'][0]
+        else:
+            colour = "белый"
+
+        if merch_features_dict['organization']:
+            brend = merch_features_dict['organization']
+        else:
+            brend = ""
+        design_pattern = merch_features_dict['design_pattern']
+        img = self.img_processor.generate_merch_image({
+            'colour': colour,
+            'design_pattern': design_pattern,
+            'brend': brend,
+        })
+        return img
         # if merch_features_dict is not None:
         #     self.img_processor.run(merch_features_dict)
 

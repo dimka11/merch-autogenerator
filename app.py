@@ -1,14 +1,13 @@
-from collections.abc import Callable
-
+import cv2
 from telegram.ext.callbackcontext import CallbackContext
 from telegram.ext.commandhandler import CommandHandler
+from telegram.ext.filters import Filters
 from telegram.ext.messagehandler import MessageHandler
 from telegram.ext.updater import Updater
 from telegram.update import Update
-from telegram.ext.filters import Filters
-
 
 from merch_generator import MerchGenerator, ImgProcessor, TextProcessor
+
 
 class TelegramBot:
     def __init__(self, bot_url: str,):
@@ -38,8 +37,9 @@ class TelegramBot:
 
     def text_message_handler(self, update: Update, context: CallbackContext):
         # (update.message.text)
-        self.merch_generator.generate(update.message.text)
-        with open('results/output сухой.png', 'rb') as file:
+        img = self.merch_generator.generate(update.message.text)
+        cv2.imwrite("results/full_bot_result.png", img)
+        with open('results/full_bot_result.png', 'rb') as file:
             update.message.reply_photo(file)
 
     def run(self):

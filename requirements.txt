@@ -9,4 +9,3 @@ colour
 deep-translator
 torch
 python-telegram-bot
-nltk
