@@ -21,13 +21,24 @@ class TelegramBot:
 
     def start(self, update: Update, context: CallbackContext):
         update.message.reply_text(
-            "Hello sir, Welcome to the Bot.Please write"
-            "help to see the commands available."
+            "Привет! Это телеграм-бот `@merch_generator_bot`, генерирующий мерч "
+            "(а именно футболку) с рисунком по текстовому описанию"
         )
+        update.message.reply_text("Для генерация футболки с рисунком:\n"
+                                  "1) Введите текстовое описание футболки, указав\n"
+                                  "   - Название бренда, логотип которого вы хотите видеть на футболке\n"
+                                  "   - Основной цвет футболки\n"
+                                  "  - Для какого мероприятия предназначена футболка\n"
+                                  "2) Дождитесь, пока бот сгенерирует изображение:)")
+
 
     def help(self, update: Update, context: CallbackContext):
-        update.message.reply_text("Введите описание мероприятия, для которого"
-                                  "вам нужен мерч")
+        update.message.reply_text("Для генерация футболки с рисунком:\n"
+                                  "1) Введите текстовое описание футболки, указав\n"
+                                  "   - Название бренда, логотип которого вы хотите видеть на футболке\n"
+                                  "   - Основной цвет футболки\n"
+                                  "  - Для какого мероприятия предназначена футболка\n"                                
+                                  "2) Дождитесь, пока бот сгенерирует изображение:)")
 
     def unknown(self, update: Update, context: CallbackContext):
         with open('results/output.png', 'rb') as file:

@@ -1,5 +1,6 @@
-import numpy as np
-import cv2
+import pathlib
+import shutil
+
 from .text_processor import TextProcessor
 from .image_processor import ImgProcessor
 
@@ -29,11 +30,14 @@ class MerchGenerator:
         else:
             brend = ""
         design_pattern = merch_features_dict['design_pattern']
+
+        pathlib.Path("downloads/").mkdir(parents=True, exist_ok=True)
         img = self.img_processor.generate_merch_image({
             'colour': colour,
             'design_pattern': design_pattern,
             'brend': brend,
         })
+        shutil.rmtree(pathlib.Path("downloads/"))
         return img
         # if merch_features_dict is not None:
         #     self.img_processor.run(merch_features_dict)
