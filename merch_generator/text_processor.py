@@ -12,6 +12,7 @@ class TextProcessor:
         self.ner_dict = {}
         self.sentence_lemmat_dict = {}
         self.sentence_lemmat = []
+        self.translated_text = ""
         # init and download models ~ few minutes, about 4 GB download data
         print("start loading models")
         self.classifier = pipeline("zero-shot-classification", model='MoritzLaurer/mDeBERTa-v3-base-mnli-xnli',
@@ -31,6 +32,7 @@ class TextProcessor:
         self.merch_type()
         self.lemmatization()
         self.colors()
+        self.text_desc()
         self.extras()
         self.brand2()
 
@@ -114,7 +116,7 @@ class TextProcessor:
     # self.ner_dict["country"] = sentence_lemmat_dict[ner_dict["country"]]
 
     def colors(self):
-        translated_text = GoogleTranslator(source='auto', target='en').translate(" ".join(self.sentence_lemmat))
+        self.translated_text = GoogleTranslator(source='auto', target='en').translate(" ".join(self.sentence_lemmat))
 
         def check_color(color):
             try:
@@ -125,10 +127,43 @@ class TextProcessor:
                 return False
 
         colors = []
-        for idx, item in enumerate([check_color(word) for word in translated_text.split()]):
+        for idx, item in enumerate([check_color(word) for word in self.translated_text.split()]):
             if item == True:
-                colors.append(translated_text.split()[idx])
+                colors.append(self.translated_text.split()[idx])
         self.ner_dict["colors"] = colors
+
+    def text_desc(self):
+        text_desc_list = []
+
+        translated_back_colors = []
+        for item in self.ner_dict.get("colors"):
+            translated = GoogleTranslator(source='auto', target='ru').translate(item)
+            translated_back_colors.append(translated)
+
+        for word in self.text_string.split():
+            if len(translated_back_colors) > 0:
+                if self.sentence_lemmat_dict.get(word) in translated_back_colors:
+                    continue
+            if self.ner_dict.get("topic") == word:
+                continue
+            if self.ner_dict.get("organization") == word:
+                continue
+            if self.ner_dict.get("city") == word:
+                continue
+            if self.ner_dict.get("country") == word:
+                continue
+            if self.ner_dict.get("merch_type") is not None:
+                if self.sentence_lemmat_dict.get(word) in self.ner_dict.get("merch_type"):
+                    continue
+            if self.ner_dict.get("extra") is not None:
+                if self.sentence_lemmat_dict.get(word) in self.ner_dict.get("extra"):
+                    continue
+            else:
+                text_desc_list.append(word)
+
+
+        self.ner_dict["design_pattern"] = " ".join(text_desc_list)
+
 
     def extras(self):
         self.ner_dict["extra"] = []
