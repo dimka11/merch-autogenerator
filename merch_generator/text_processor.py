@@ -146,7 +146,7 @@ class TextProcessor:
                     continue
             if self.ner_dict.get("topic") == word:
                 continue
-            if self.ner_dict.get("organization") == word:
+            if self.ner_dict.get("organization").strip() == word:
                 continue
             if self.ner_dict.get("city") == word:
                 continue
@@ -156,7 +156,7 @@ class TextProcessor:
                 if self.sentence_lemmat_dict.get(word) in self.ner_dict.get("merch_type"):
                     continue
             if self.ner_dict.get("extra") is not None:
-                if self.sentence_lemmat_dict.get(word) in self.ner_dict.get("extra"):
+                if self.sentence_lemmat_dict.get(word).strip() in self.ner_dict.get("extra"):
                     continue
             else:
                 text_desc_list.append(word)
