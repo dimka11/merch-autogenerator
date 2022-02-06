@@ -1,9 +1,53 @@
-# RU
 # Автогенератор мерча по бренду
 
 ## Описание:
+`@merch_generator_bot`  представляет собой реализацию проекта 
+«Автогенератор мерча по бренду» в рамках зимней школы
+[CompTech School 2022](https://comptechschool.com/).
 
-Телеграм-бот `@merch_generator_bot`, генерирующий мерч (а именно футболку) с рисунком по текстовому описанию
+## Папки и файлы репозитория:
+- 🗂️[`YandexImagesParser @ 9e0d9d8`](https://github.com/Ulbwaa/YandexImagesParser/tree/9e0d9d854bc487dadbc01ff240b5cc89efb250ed) - папка необходима для поиска паттернов в Яндексе.
+- 🗂️[`clothes_templates`](https://github.com/comptech-winter-school/merch-autogenerator/tree/main/clothes_templates) - папка содержит шаблон для наложения мерча.
+- 🗂️[`docs`](https://github.com/comptech-winter-school/merch-autogenerator/tree/main/docs) - папка содержит проектную документацию.
+
+- 🗂️[`merch_generator`](https://github.com/comptech-winter-school/merch-autogenerator/tree/main/merch_generator) - папка содержит скрипты для обработки изображений и парсинга текста.
+- [`.gitignore`](https://github.com/comptech-winter-school/merch-autogenerator/blob/main/.gitignore) - каких файлов не должно быть в удалённом репозитории.
+- [`gitmodules`](https://github.com/comptech-winter-school/merch-autogenerator/blob/main/.gitignore) - папка содеджит дополнительные модули, внешние репозитории.
+- [`app.py`](https://github.com/comptech-winter-school/merch-autogenerator/blob/main/app.py) - приложение, телеграм бот, в который включен мерч .
+- [`requirements.txt`](https://github.com/comptech-winter-school/merch-autogenerator/blob/main/requirements.txt) - список зависимостей, необходимых для работы скриптов.
+- [`run.py`](https://github.com/comptech-winter-school/merch-autogenerator/blob/main/run.py) - файл для запуска бота.
+## Назначение
+
+Каждая компания хоть раз задумывалась о разработке собственного мерча для создания айдентики бренда или повышения лояльности к мероприятию.
+
+Основная цель проекта – предоставить инструмент для генерации мерча к определенным событиям.
+
+## Принцип работы
+
+Исходя из запроса пользователя, бот автоматически генерирует футболку-мерч.
+
+## Целевая аудитория (пользователи продукта)
+
+Проект может представлять интерес для компаний, заинтересованных в мерче для своих целей (айдентика, мероприятия).
+
+### Зависимости
+
+Указаны в [`requirements.txt`](https://github.com/comptech-winter-school/merch-autogenerator/blob/main/requirements.txt).
+
+## Использование
+
+
+
+1. Открыть приложение Telegram;
+2. Ввести наименование телеграм-бота в строку поиска или воспользоваться ссылкой (наименование телеграм-бота: merch-generator-bot, ссылка: https://t.me/merch_generator_bot);
+3. Нажать кнопку «START»;
+4. Ввести свои характеристики для мерча:
+   - Название бренда, логотип которого вы хотите видеть на футболке
+   - Основной цвет футболки
+   - Для какого мероприятия предназначена футболка
+5. Дождитесь ответного сообщения бота с мерчом 
+
+
 
 ## Команда:
 - Калиниченко Михаил – капитан, Backend, CV разработчик
@@ -12,90 +56,3 @@
 
 ## Кураторы:
 - Созинов Иван – руководитель команды, FrontEnd разработчик
-
-# Инструкция по использованию бота: 
-
-## Генерация футболки с рисунком:
-
-1) Введите текстовое описание футболки, указав
-
-   - Название бренда, логотип которого вы хотите видеть на футболке
-   - Основной цвет футболки
-   - Для какого мероприятия предназначена футболка
-
-2) Дождитесь, пока бот сгенерирует изображение:)
-
-## Запуск бота на своём сервере:
-
-Для запуска рекомендуется использовать `python 3.8` и ОС `Ubuntu 21.04`
-
-1) склонируйте репозиторий 
-
-`git clone https://github.com/mikhail-7975/merch-autogenerator.git`
-2) установите все библиотеки 
-
-`pip install -r requirements.txt`
-
-Для установки YandexImageParser следуйте инструкции, указанной в репозитории https://github.com/Ulbwaa/YandexImagesParser/
-
-3) Создайте в корневой папке проекта файл `config.py`, в котором укажите токен своего телеграм-бота
-
-```python
-telegram_bot_token = "str_with_your_url"
-```
-4) Запустите файл `run.py`
-
-`python run.py`
-
-5) Отправьте текстовый запрос на генерацию изображения и дождитесь результата:)
-
-# EN
-# Brand merchandise generator
-
-## Description:
-
-Telegram bot `@merch_generator_bot` that generates merchandise (namely, a T-shirt) with a picture based on a text description
-
-## Team:
-- Mikhail Kalinichenko - captain, Backend, CV developer
-- Dmitry Sokolov - NLP, CV, Backend developer
-- Pereladova Alina - technical writer
-
-## Curators:
-- Sozinov Ivan - team leader, FrontEnd developer
-
-# Instructions for using the bot:
-
-## Generation of a t-shirt with a picture:
-
-1) Enter a textual description of the T-shirt, specifying
-
-   - The name of the brand whose logo you want to see on the T-shirt
-   - The main color of the T-shirt
-   What event is the T-shirt for?
-
-2) Wait for the bot to generate the image :)
-
-## Run the bot on your server:
-
-To run it is recommended to use `python 3.8` and `Ubuntu 21.04 OS`
-
-1) clone the repository
-
-`git clone https://github.com/mikhail-7975/merch-autogenerator.git`
-2) install all libraries
-
-`pip install -r requirements.txt`
-
-To install YandexImageParser, follow the instructions in the repository https://github.com/Ulbwaa/YandexImagesParser/
-
-3) Create a file `config.py` in the root folder of the project, in which specify the token of your telegram bot
-
-```python
-telegram_bot_token = "str_with_your_url"
-```
-4) Run the file `run.py`
-
-`python run.py`
-
-5) Send a text request to generate an image and wait for the result :)
