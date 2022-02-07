@@ -95,8 +95,12 @@ class TextProcessor:
             topic_cats0 = ["city", "country"]
             for item in location:
                 cls_r = self.classifier(item, topic_cats0, multi_label=False)
-            if cls_r["scores"][0] > 0.3:
-                self.ner_dict[cls_r["labels"][0]] = item
+                if cls_r["scores"][0] > 0.3:
+                    self.ner_dict[cls_r["labels"][0]] = item
+            if (len(location) > 1)  and ((ner_dict.get("city") == None) or (ner_dict.get("country") == None)):
+                location.remove(word_is_used)
+                ner_dict["second_locaton"] = location[0]
+
 
     def merch_type(self):
         # Merch type тут тупо используем словарь
